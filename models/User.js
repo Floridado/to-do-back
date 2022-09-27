@@ -11,7 +11,6 @@ const userSchema = Mongoose.Schema(
       dueDate: Date,
     },
     token: String,
-    email: String,
   },
   { timestamps: true }
 );
