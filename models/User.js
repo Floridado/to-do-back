@@ -9,8 +9,8 @@ const userSchema = Mongoose.Schema(
       task: String,
       dateAdded: Date,
       dueDate: Date,
+      status: Boolean,
     },
-    token: String,
   },
   { timestamps: true }
 );
