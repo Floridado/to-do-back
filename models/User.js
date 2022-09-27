@@ -5,6 +5,7 @@ const userSchema = Mongoose.Schema({
   password: String,
   todos: {
     task: String,
+    dateAdded: Date,
     dueDate: Date,
   },
   token: String,
