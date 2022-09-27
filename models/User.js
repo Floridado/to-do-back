@@ -3,7 +3,6 @@ const Mongoose = require("mongoose");
 const userSchema = Mongoose.Schema(
   {
     name: String,
-    email: String,
     password: String,
     todos: {
       task: String,
@@ -11,6 +10,7 @@ const userSchema = Mongoose.Schema(
       dueDate: Date,
     },
     token: String,
+    email: String,
   },
   { timestamps: true }
 );
