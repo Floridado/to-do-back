@@ -32,7 +32,7 @@ const login = (req, res, next) => {
       bcrypt.compare(password, user.password, (error, result) => {
         if (err) res.json({ message: "An error occured", err });
         if (result) {
-          let token = jwt.sign({ name: user.name }, "secretValue", {
+          let token = jwt.sign({ name: user.name }, process.env.TOKEN, {
             expiresIn: "2h",
           });
           res.json({
