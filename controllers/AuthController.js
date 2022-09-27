@@ -24,6 +24,35 @@ const register = (req, res, next) => {
   });
 };
 
+const login = (req, res, next) => {
+  const { name, password } = req.body;
+
+  User.findOne({ username }).then((user) => {
+    if (user) {
+      bcrypt.compare(password, user.password, (error, result) => {
+        if (err) res.json({ message: "An error occured", err });
+        if (result) {
+          let token = jwt.sign({ name: user.name }, "secretValue", {
+            expiresIn: "2h",
+          });
+          res.json({
+            message: "Login Successful",
+            token,
+          });
+        } else {
+          res.json({ message: "Wrong password" });
+        }
+      });
+    } else {
+      res.json({
+        message:
+          "User not found! Please make sure you entered the correct information",
+      });
+    }
+  });
+};
+
 module.exports = {
   register,
+  login,
 };
