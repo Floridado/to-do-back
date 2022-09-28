@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const Mongoose = require("mongoose");
 //Routes
 const { auth } = require("./routes/auth");
+const { dash } = require("./routes/dashboard");
 
 //App
 const app = Express();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", auth);
+app.use("/dash", dash);
 
 //Server
 Mongoose.connect(process.env.DB, {
