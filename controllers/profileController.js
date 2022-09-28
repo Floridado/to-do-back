@@ -10,3 +10,5 @@ const userData = (req, res) => {
       if (error) res.json({ err: error.message });
     });
 };
+
+module.exports = userData;
