@@ -1,5 +1,5 @@
-const auth = require('./auth');
+const auth = require("../middleware/authenticate");
 
-const router = require('express').Router();
+const router = require("express").Router();
 
-router.post("/profile", auth, userData)
+router.post("/profile", auth, userData);
