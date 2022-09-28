@@ -27,10 +27,10 @@ const register = (req, res, next) => {
 const login = (req, res, next) => {
   const { name, password } = req.body;
 
-  User.findOne({ username }).then((user) => {
+  User.findOne({ name }).then((user) => {
     if (user) {
       bcrypt.compare(password, user.password, (error, result) => {
-        if (err) res.json({ message: "An error occured", err });
+        if (error) res.json({ message: "An error occured", err });
         if (result) {
           let token = jwt.sign({ name: user.name }, process.env.TOKEN, {
             expiresIn: "2h",

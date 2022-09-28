@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 const Mongoose = require("mongoose");
 //Routes
+const { auth } = require("./routes/auth");
 
 //App
 const app = Express();
@@ -21,6 +22,8 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.sendStatus(200);
 });
+
+app.use("/auth", auth);
 
 //Server
 Mongoose.connect(process.env.DB, {
