@@ -1,19 +1,21 @@
 const Express = require("express");
 require("dotenv").config();
+const Mongoose = require("mongoose");
 
 //Middlewares
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
-const Mongoose = require("mongoose");
 //Routes
 const { auth } = require("./routes/auth");
 const { dash } = require("./routes/dashboard");
+const { todo } = require("./routes/todos");
 
 //App
 const app = Express();
 
+//Middlewares
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,8 +26,10 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 
+//Routing
 app.use("/auth", auth);
 app.use("/dash", dash);
+app.use("/todo", todo);
 
 //Server
 Mongoose.connect(process.env.DB, {
