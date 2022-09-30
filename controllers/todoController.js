@@ -1,30 +1,49 @@
+const Todo = require("../models/Todo");
 const User = require("../models/User");
 
-let idCounter = 0;
-
 const addTodo = (req, res) => {
-  idCounter++;
   const { name } = req.user;
   const { task, dueDate, status } = req.body;
-  User.UpdateOne(
-    { name },
-    { $push: { todos: { idCounter, task, dueDate, status } } }
-  ).then(() => res.json({ message: "Task added" }));
+  User.findOne({ name })
+    .then((user) => {
+      const newTodo = new Todo({
+        user: user._id,
+        task,
+        dueDate,
+        status,
+      });
+      newTodo.save().then(async () => {
+        res.json({ message: "added", todos: await Todo.find() });
+      });
+    })
+    .catch((err) => res.json({ message: "error", error: err.message }));
 };
 
 const editTodo = (req, res) => {
-  const { name } = req.user;
   const { task, dueDate, status, _id } = req.body;
-  User.UpdateOne(
-    { name, "todos._id": _id },
-    { $set: { task, dueDate, status } }
-  ).then(() => res.json({ message: "Task updated" }));
+  const params = req.params.toEdit;
+  let update = {};
+  if (params === "date") {
+    update = { dueDate, status };
+  } else if (params === "content") {
+    update = { task };
+  } else {
+    update = { status };
+  }
+  Todo.findByIdAndUpdate(_id, { $set: update })
+    .then(async () => {
+      res.json({ message: "updated", todos: await Todo.find() });
+    })
+    .catch((err) => res.json({ message: "error", error: err.message }));
 };
 
 const deleteTodo = (req, res) => {
-  const { name } = req.user;
   const { _id } = req.body;
-  User.updateOne({ name }, { $pull: { todos: { $elemMatch: { _id } } } });
+  Todo.findOneAndDelete(_id)
+    .then(async () => {
+      res.json({ message: "deleted", todos: await Todo.find() });
+    })
+    .catch((err) => res.json({ message: "error", error: err.message }));
 };
 
 module.exports = { addTodo, editTodo, deleteTodo };

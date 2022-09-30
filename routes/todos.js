@@ -15,7 +15,7 @@ router.get("/", auth, (req, res) => {
 });
 
 router.post("/add", auth, addTodo);
-router.put("/edit", auth, editTodo);
-router.put("/delete", auth, deleteTodo);
+router.put("/:toEdit", auth, editTodo);
+router.delete("/delete", auth, deleteTodo);
 
-module.exports = {todo: router}
+module.exports = { todo: router };
