@@ -5,6 +5,10 @@ const userSchema = Mongoose.Schema(
     name: String,
     email: String,
     password: String,
+    todos: {
+      type: Array,
+      ref: "Todo",
+    },
   },
   { timestamps: true }
 );

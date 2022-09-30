@@ -6,6 +6,7 @@ const Mongoose = require("mongoose");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const compression = require("compression");
 
 //Routes
 const { auth } = require("./routes/auth");
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(compression());
 
 //Health check
 app.get("/", (req, res) => {

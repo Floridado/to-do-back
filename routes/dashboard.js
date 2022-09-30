@@ -2,8 +2,8 @@ const {
   pwChange,
   emailChange,
   nameChange,
-} = require("../controllers/credsController");
-const userData = require("../controllers/profileController");
+  userData,
+} = require("../controllers/userController");
 const auth = require("../middleware/authenticate");
 
 const router = require("express").Router();
